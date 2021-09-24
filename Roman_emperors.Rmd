@@ -67,8 +67,3 @@ emperors %>%
        y = "Number of Emperors") +
        theme(legend.position = "none")
 ```
-  
-```{r}
-
-```
-
