@@ -1,0 +1,74 @@
+---
+title: "Roman_Emperors"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+#Initialising packages
+```{r}
+library(scales)
+library(lubridate)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(forcats)
+library(ggthemes)
+theme_set(theme_light())
+```
+
+# Loading the data
+```{r}
+emperors <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv")
+```
+
+# Inspecting Data
+```{r}
+glimpse(emperors)
+```
+
+# Convert dates into numeric values
+```{r}
+emperors$reign_start <- as.numeric(emperors$reign_start)
+emperors$reign_end <- as.numeric(emperors$reign_end)
+```
+
+# Calculating reign length and their averages
+```{r}
+reign <- emperors %>%
+  group_by(rise) %>%
+  mutate(reign_length = reign_end - reign_start) %>%
+  summarise(mean_reign = mean(reign_length)) %>%
+  mutate(years_in_power = mean_reign / 365)
+```
+
+# Plotting the average length of reign by rise
+```{r}
+reign %>% 
+  ggplot(aes(x = years_in_power, y = reorder(rise, years_in_power))) +
+  geom_bar(aes(fill = rise), stat = "identity") +
+  labs(title = "Roman Emperors",
+       subtitle = "Rise to Power and Length of Reign",
+       x = "Average Length of Reign (years)",
+       y = "") +
+  theme(legend.position = "none")
+```
+
+
+# Plotting causes of death
+```{r}
+emperors %>%
+  ggplot(aes(x = cause)) +
+  geom_bar(aes(fill = cause), stat = "count") +
+  coord_flip() +
+  labs(title = "Causes of Death of Roman Emperors",
+       subtitle = "From 14 AD to 395 AD",
+       x = "Cause of Death",
+       y = "Number of Emperors") +
+       theme(legend.position = "none")
+```
+  
+```{r}
+
+```
+
