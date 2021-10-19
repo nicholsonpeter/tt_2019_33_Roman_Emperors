@@ -14,7 +14,7 @@ library(tidyr)
 library(dplyr)
 library(forcats)
 library(ggthemes)
-theme_set(theme_light())
+library(bbplot)
 ```
 
 # Loading the data
@@ -51,6 +51,7 @@ reign %>%
        subtitle = "Rise to Power and Length of Reign",
        x = "Average Length of Reign (years)",
        y = "") +
+  bbc_style() +
   theme(legend.position = "none")
 ```
 
@@ -65,5 +66,6 @@ emperors %>%
        subtitle = "From 14 AD to 395 AD",
        x = "Cause of Death",
        y = "Number of Emperors") +
+  bbc_style() +
        theme(legend.position = "none")
 ```
